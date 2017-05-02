@@ -1,12 +1,23 @@
 // Databricks notebook source
-/*** WDB-Utils
+/*
+
+* WDB-Utils
 Whitechno-Databricks Utilities
 
-To run:
+*** To run:
 
 %run "Lib/WDB-Utils.scala"
 
 import com.whitechno.databricks.utils.wdb.SdsUtils._
+
+
+*** GitHub repository:
+
+https://github.com/whitechno/databricks-wdb-utils
+
+*** Databricks' guide to GitHub Version Control:
+
+https://docs.databricks.com/user-guide/notebooks/github-version-control.html
 
 */
 
