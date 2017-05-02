@@ -39,6 +39,7 @@ case class FileInfoPp(path: String, name: String, size: Long)
 
 
 object wdb { // wdb (Whitechno-Databricks Utilities)
+  
   import org.apache.spark.sql.{DataFrame, Dataset, Column}
   import org.apache.spark.sql.functions._
   import org.apache.spark.sql.types._
@@ -58,6 +59,7 @@ object wdb { // wdb (Whitechno-Databricks Utilities)
       val data = df.collect.map(r => header.map(h => r.getAs[Any](h).toString).toSeq).toSeq
       TableForDisplay(header, data)
     }
+    
   }
   
   // "functional-style" display for Dataset:
@@ -67,12 +69,14 @@ object wdb { // wdb (Whitechno-Databricks Utilities)
   
   // StructType flattening
   implicit class DataFrameFlattener(df: DataFrame) {
+    
     def flattenSchema: DataFrame = df.select(flatten(Nil, df.schema): _*)
     
     protected def flatten(path: Seq[String], schema: DataType): Seq[Column] = schema match {
       case s: StructType => s.fields.flatMap(f => flatten(path :+ f.name, f.dataType))
       case other => col(path.map(n => s"`$n`").mkString(".")).as(path.mkString(".")) :: Nil
     }
+    
   }
   
   
@@ -99,4 +103,5 @@ object wdb { // wdb (Whitechno-Databricks Utilities)
     )).toDS
     
   }
+  
 } // object wdb
