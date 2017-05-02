@@ -2,13 +2,14 @@
 Convenience utilities for use in Databricks.  
 WDB stands for Whitechno-Databricks.
 
+#### All Databricks Notebooks source files are in `DBN` folder.
 *Please note double `.scala` in file names!*  
 This is due to the way Databricks imports notebooks from Source Files:  
 it drops last `.scala` from a file name to create a notebook name.
 
 #### To run:
 ```
-%run ./Lib/WDB-Utils.scala
+%run ./WDB-Utils.scala
 ```
 and then
 ```
