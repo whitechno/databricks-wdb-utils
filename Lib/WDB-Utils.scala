@@ -61,7 +61,9 @@ object wdb { // wdb (Whitechno-Databricks Utilities)
   }
   
   // "functional-style" display for Dataset:
-  implicit class DatasetDisplay[T](ds: Dataset[T]) { def display(): Unit = com.databricks.backend.daemon.driver.EnhancedRDDFunctions.display(ds) }
+  implicit class DatasetDisplay[T](ds: Dataset[T]) { 
+    def display(): Unit = com.databricks.backend.daemon.driver.EnhancedRDDFunctions.display(ds) 
+  }
   
   // StructType flattening
   implicit class DataFrameFlattener(df: DataFrame) {
