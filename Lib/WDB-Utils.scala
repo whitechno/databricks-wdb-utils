@@ -6,9 +6,9 @@ Whitechno-Databricks Utilities
 
 *** To run:
 
-%run "Lib/WDB-Utils.scala"
+%run "./WDB-Utils.scala"
 
-import com.whitechno.databricks.utils.wdb.SdsUtils._
+import com.whitechno.databricks.utils.wdb._
 
 
 *** GitHub repository:
@@ -23,7 +23,7 @@ https://docs.databricks.com/user-guide/notebooks/github-version-control.html
 
 // COMMAND ----------
 
-package com.whitechno.databricks.utils.wdb
+package com.whitechno.databricks.utils
   
 // ******************************************************************************
 //
@@ -38,7 +38,7 @@ case class TableForDisplay(header: Seq[String], data: Seq[Seq[String]])
 case class FileInfoPp(path: String, name: String, size: Long)
 
 
-object SdsUtils { // Spark Dataset Utils
+object wdb { // wdb (Whitechno-Databricks Utilities)
   import org.apache.spark.sql.{DataFrame, Dataset, Column}
   import org.apache.spark.sql.functions._
   import org.apache.spark.sql.types._
@@ -97,4 +97,4 @@ object SdsUtils { // Spark Dataset Utils
     )).toDS
     
   }
-} // object SdsUtils
+} // object wdb
