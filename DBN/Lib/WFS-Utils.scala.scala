@@ -16,6 +16,7 @@ import com.whitechno.databricks.utils.wfs // for wfs.ls, wfs.cnt, wfs.read, wfs.
 
 package com.whitechno.databricks.utils
 
+// my awesome comment
 // output container for ls & cnt functions:
 case class PathInfo(
   descr:         String  = "", 
