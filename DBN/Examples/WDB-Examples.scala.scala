@@ -3,10 +3,6 @@
 
 // COMMAND ----------
 
-
-
-// COMMAND ----------
-
 wfs.cnt("/FileStore").toDS.display
 
 // COMMAND ----------
@@ -42,4 +38,5 @@ dirs.flatMap(dir => wfs.cnt(dir)).toDS.display
 sc.parallelize(dirs).flatMap(dir => wfs.cnt(dir)).toDS.display
 
 // COMMAND ----------
+
 
