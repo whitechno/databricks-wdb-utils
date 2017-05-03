@@ -39,4 +39,3 @@ sc.parallelize(dirs).flatMap(dir => wfs.cnt(dir)).toDS.display
 
 // COMMAND ----------
 
-
