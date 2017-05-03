@@ -52,6 +52,7 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
     }
   }
   
+  //
   // listing files and dirs
   def ls(path: String, descr: String = ""): Seq[PathInfo] = {
     val pathPath = new Path(path)
@@ -60,7 +61,8 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
     fs.exists(pathPath) match {
       
       // doesn't exist:
-      case false => Seq(PathInfo(descr=descr, path=pathPath.toString, name=pathPath.getName, exists=false, isDir=false, dirs_cnt=0, files_cnt=0, files_size=0L, files_size_pp=""))
+      case false => 
+        Seq(PathInfo(descr=descr, path=pathPath.toString, name=pathPath.getName, exists=false, isDir=false, dirs_cnt=0, files_cnt=0, files_size=0L, files_size_pp=""))
       
       // exists: count files and dirs
       case true =>  fs.listStatus(pathPath).toList.map(fStat => PathInfo(
@@ -78,6 +80,7 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
     }
   }
   
+  //
   // counting files and dirs
   def cnt(path: String, descr: String = ""): Seq[PathInfo] = {
     val pathPath = new Path(path)
@@ -86,7 +89,8 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
     fs.exists(pathPath) match {
       
       // doesn't exist
-      case false => Seq(PathInfo(descr=descr, path=pathPath.toString, name=pathPath.getName, exists=false, isDir=false, dirs_cnt=0, files_cnt=0, files_size=0L, files_size_pp=""))
+      case false => 
+        Seq(PathInfo(descr=descr, path=pathPath.toString, name=pathPath.getName, exists=false, isDir=false, dirs_cnt=0, files_cnt=0, files_size=0L, files_size_pp=""))
       
       // exists
       case true =>  
@@ -107,6 +111,9 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
     }
   }
   
+  // small helpful utils...
+  
+  //
   // get org.apache.hadoop.fs.FSDataInputStream
   def getInputStream(path: String): org.apache.hadoop.fs.FSDataInputStream = {
     val pathPath = new Path(path)
@@ -125,7 +132,6 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
     inStream.close
     out
   }
-  
   // for XML files the best way is to copy to /FileStore and use browser: dbutils.fs.cp(xmlFile3d, xmlFileStore)
   // or:
   // scala.xml.XML.load(getInputStream(path))
@@ -138,8 +144,16 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
     fs.createNewFile(pathPath)
   }
   
+  //
+  // To get JARs on class path:
+  def getJARs(): Seq[String] = {
+    //import java.net.URL
+    import java.net.URLClassLoader
+    val cl = ClassLoader.getSystemClassLoader
+    cl.asInstanceOf[URLClassLoader].getURLs.map(_.getPath).sorted.toList
+  }
+  
 } // object wfs
 
 // COMMAND ----------
-
 
