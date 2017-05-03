@@ -155,5 +155,3 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
   
 } // object wfs
 
-// COMMAND ----------
-
