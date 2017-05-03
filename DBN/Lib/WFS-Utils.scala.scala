@@ -16,18 +16,17 @@ import com.whitechno.databricks.utils.wfs // for wfs.ls, wfs.cnt, wfs.read, wfs.
 
 package com.whitechno.databricks.utils
 
-// utility case class for "Dirs and Files Count" functions
+// output container for ls & cnt functions:
 case class PathInfo(
-  descr: String = "", 
-  path: String, 
-  name: String,
-  exists: Boolean, 
-  isDir: Boolean, 
-  dirs_cnt: Int, 
-  files_cnt: Int, 
-  files_size: Long, 
-  files_size_pp: String
-)
+  descr:         String  = "", 
+  path:          String, 
+  name:          String,
+  exists:        Boolean, 
+  isDir:         Boolean, 
+  dirs_cnt:      Int, 
+  files_cnt:     Int, 
+  files_size:    Long, 
+  files_size_pp: String)
 
 object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
   
@@ -154,4 +153,3 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
   }
   
 } // object wfs
-
