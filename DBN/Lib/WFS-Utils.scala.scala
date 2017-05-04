@@ -16,18 +16,18 @@ import com.whitechno.databricks.utils.wfs // for wfs.ls, wfs.cnt, wfs.read, wfs.
 
 package com.whitechno.databricks.utils
 
-// my awesome comment
+// 
 // output container for ls & cnt functions:
-case class PathInfo(
+case class PathInfo( // all default values are for non-existing paths
   descr:         String  = "", 
   path:          String, 
   name:          String,
-  exists:        Boolean, 
-  isDir:         Boolean, 
-  dirs_cnt:      Int, 
-  files_cnt:     Int, 
-  files_size:    Long, 
-  files_size_pp: String)
+  exists:        Boolean = false, 
+  isDir:         Boolean = false, 
+  dirs_cnt:      Int     = 0, 
+  files_cnt:     Int     = 0, 
+  files_size:    Long    = 0L, 
+  files_size_pp: String  = "")
 
 object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
   
@@ -40,7 +40,11 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
   
   protected def humanReadableByteCount(bytes: Long, si: Boolean = false): String = {
     val unit = if(si) 1000 else 1024
-    val prefix = (if(si) "kMGTPE" else "KMGTPE").split("") // need to convert to array because of possible ambiguous conversion method string2jvalue in trait Implicits of type (x: String)org.json4s.JsonAST.JValue
+    
+    // need to convert to array 
+    // because of possible ambiguous conversion method string2jvalue 
+    // in trait Implicits of type (x: String)org.json4s.JsonAST.JValue
+    val prefix = (if(si) "kMGTPE" else "KMGTPE").split("") 
     val bi = if(si) "" else "i"
     
     bytes < unit match {
@@ -48,7 +52,7 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
         case _ => 
           val exp = (math.log(bytes)/math.log(unit)).toInt
           val biu = bytes / math.pow(unit, exp)
-          f"$biu%.2f ${prefix(exp-1)}${bi}B"
+          f"${biu}%.2f ${prefix(exp-1)}${bi}B"
     }
   }
   
@@ -62,7 +66,7 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
       
       // doesn't exist:
       case false => 
-        Seq(PathInfo(descr=descr, path=pathPath.toString, name=pathPath.getName, exists=false, isDir=false, dirs_cnt=0, files_cnt=0, files_size=0L, files_size_pp=""))
+        Seq(PathInfo(descr=descr, path=pathPath.toString, name=pathPath.getName))
       
       // exists: count files and dirs
       case true =>  fs.listStatus(pathPath).toList.map(fStat => PathInfo(
@@ -90,7 +94,7 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
       
       // doesn't exist
       case false => 
-        Seq(PathInfo(descr=descr, path=pathPath.toString, name=pathPath.getName, exists=false, isDir=false, dirs_cnt=0, files_cnt=0, files_size=0L, files_size_pp=""))
+        Seq(PathInfo(descr=descr, path=pathPath.toString, name=pathPath.getName))
       
       // exists
       case true =>  
@@ -111,7 +115,9 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
     }
   }
   
+  //
   // small helpful utils...
+  //
   
   //
   // get org.apache.hadoop.fs.FSDataInputStream
@@ -145,7 +151,7 @@ object wfs { // stands for "Whitechno File System" - kinda like 'dbutils.fs'
   }
   
   //
-  // To get JARs on class path:
+  // To get the list of all JARs on class path:
   def getJARs(): Seq[String] = {
     //import java.net.URL
     import java.net.URLClassLoader
